@@ -12,22 +12,33 @@ class Menu extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Menu")),
-      body: ListView.builder(
-        itemCount: ctrl.catalog.length,
-        itemBuilder: (_, i) {
-          final item = ctrl.catalog[i];
-          return ListTile(
-            leading: Image.asset(item.imageUrl, width: 60, height: 60),
-            title: Text(item.name),
-            subtitle: Text("Rp ${item.price}"),
-            trailing: ElevatedButton(
-              onPressed: () => ctrl.addItem(item),
-              child: const Text("Tambah"),
-            ),
-            onTap: () => Get.to(() => Detail(item: item)),
-          );
-        },
-      ),
+      body: Obx(() {
+        if (ctrl.catalog.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return ListView.builder(
+          itemCount: ctrl.catalog.length,
+          itemBuilder: (_, i) {
+            final item = ctrl.catalog[i];
+            return ListTile(
+              leading: Image.asset(
+                item.imageUrl,
+                width: 60,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+              title: Text(item.name),
+              subtitle: Text("Rp ${item.price}"),
+              trailing: ElevatedButton(
+                onPressed: () => ctrl.addItem(item),
+                child: const Text("Tambah"),
+              ),
+              onTap: () => Get.to(() => Detail(item: item)),
+            );
+          },
+        );
+      }),
     );
   }
 }

@@ -24,21 +24,26 @@ class Cart extends StatelessWidget {
               child: ListView(
                 children: ctrl.items.entries.map((e) {
                   final menu = ctrl.catalog.firstWhere(
-                      (item) => item.id == e.key);
+                    (item) => item.id == e.key,
+                  );
                   final qty = e.value;
 
                   return ListTile(
-                    leading: Image.asset(menu.imageUrl, 
-                    width: 60, height: 60),
+                    leading: Image.asset(
+                      menu.imageUrl,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
                     title: Text(menu.name),
                     subtitle: Text(
-                        "Rp ${menu.price} x $qty = Rp ${menu.price * qty}"),
+                      "Rp ${menu.price} x $qty = Rp ${menu.price * qty}",
+                    ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon:
-                              const Icon(Icons.remove_circle_outline),
+                          icon: const Icon(Icons.remove_circle_outline),
                           onPressed: () => ctrl.removeSingle(menu),
                         ),
                         Text("$qty"),
@@ -59,18 +64,23 @@ class Cart extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Total",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold)),
-                      Text("Rp ${ctrl.totalPrice}",
-                          style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.brown,
-                              fontWeight: FontWeight.bold)),
+                      const Text(
+                        "Total",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "Rp ${ctrl.totalPrice}",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.brown,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 12),
@@ -78,8 +88,10 @@ class Cart extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       ctrl.clearCart();
-                      Get.snackbar("Checkout",
-                          "Pesanan berhasil (demo)");
+                      Get.snackbar(
+                        "Checkout",
+                        "Pesanan berhasil (demo)",
+                      );
                     },
                     child: const Text("Checkout"),
                   )
